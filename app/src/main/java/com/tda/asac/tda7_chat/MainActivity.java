@@ -1618,6 +1618,7 @@ public class MainActivity extends Activity implements Runnable, TextView.OnEdito
             b_is_radio_module_command=true;
 
         }
+// not a very useful comment here
         else if (text_input.contentEquals("tf")){
 //AT+ASACMOD=2,1
 // AT+ASACCHANNEL=40,0

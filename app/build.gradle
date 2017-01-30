@@ -9,6 +9,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 17
         // 1.10 entirely rebuilt the git repository and the project!!!
+        //   just trying to puch from Android Studio now
         versionCode 1010
         versionName "1.10"
     }
