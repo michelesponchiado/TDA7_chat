@@ -271,7 +271,7 @@ public class MainActivity extends Activity implements Runnable, TextView.OnEdito
             }
         }
         // testing the LEDs
-        if (true)
+        if (false)
         {
             Asac_LEDs asacLEDs = new Asac_LEDs(this);
             if (asacLEDs != null)
@@ -1446,6 +1446,7 @@ public class MainActivity extends Activity implements Runnable, TextView.OnEdito
         String msg_string=new String();
         boolean b_is_radio_module_command=false;
         boolean b_hide_onscreen_keyboard=false;
+        boolean bAskRadioPower = false;
         // "typhoon" to program radio module in typhoon emulation mode, i.e. in the way we want actually to use the module to communicate with the remote PC
         if (text_input.contentEquals("typhoon")){
             b_hide_onscreen_keyboard=true;
@@ -1634,17 +1635,8 @@ public class MainActivity extends Activity implements Runnable, TextView.OnEdito
             // execute at+asaci
             msg_string=asac_radio_module_commands.build_get_module_info();
             b_is_radio_module_command=true;
-            try
-            {
-                Thread.sleep(500);
-            }
-            catch (InterruptedException e)
-            {
-
-            }
-            this.asac_radio_transport_layer.asks_radio_power();
-
-            }
+            bAskRadioPower=true;
+        }
         else if (text_input.startsWith("tc"))
         {
             if (text_input.length()>2)
@@ -1659,17 +1651,7 @@ public class MainActivity extends Activity implements Runnable, TextView.OnEdito
                 // execute at+asaci
                 msg_string=asac_radio_module_commands.build_get_module_info();
                 b_is_radio_module_command=true;
-                try
-                {
-                    Thread.sleep(500);
-                }
-                catch (InterruptedException e)
-                {
-
-                }
-                this.asac_radio_transport_layer.release_radio_power();
             }
-
         }
         else if (text_input.startsWith("nav0"))
         {
@@ -1963,9 +1945,7 @@ public class MainActivity extends Activity implements Runnable, TextView.OnEdito
             final AlertDialog.Builder asAlert = new AlertDialog.Builder(context);
             asAlert.setTitle("EEPROM read auto-shutdown time");
             asAlert.setMessage("Current auto shutdown time is set to " + ae.readTDA7_auto_shutdown() + " minutes");
-            final EditText userInput = new EditText(context);
-            asAlert.setView(userInput);
-            asAlert.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+            asAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -1986,8 +1966,6 @@ public class MainActivity extends Activity implements Runnable, TextView.OnEdito
             final AlertDialog.Builder asAlert = new AlertDialog.Builder(context);
             asAlert.setTitle("EEPROM write auto-shutdown time");
             asAlert.setMessage("Current auto shutdown time is set to " + ae.readTDA7_auto_shutdown() + " minutes");
-            final EditText userInput = new EditText(context);
-            asAlert.setView(userInput);
             asAlert.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -2113,7 +2091,18 @@ public class MainActivity extends Activity implements Runnable, TextView.OnEdito
 
             }
             //public enum_rtl_txrx_return_code transmitAndReceive(enum_rnl_message_destination_type destination, Asac_radio_network_layer_message msg_transmit, Asac_radio_network_layer_message msg_received){
+        }
+        if (bAskRadioPower)
+        {
+            try
+            {
+                Thread.sleep(500);
+            }
+            catch (InterruptedException e)
+            {
 
+            }
+            this.asac_radio_transport_layer.asks_radio_power();
         }
         return true;
     }

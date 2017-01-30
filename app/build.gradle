@@ -9,9 +9,9 @@ android {
         minSdkVersion 17
         targetSdkVersion 17
         // 1.10 entirely rebuilt the git repository and the project!!!
-        //   just trying to puch from Android Studio now
-        versionCode 1010
-        versionName "1.10"
+        // 1.11 some changes to handle "tf" command lost  when switching git repo
+        versionCode 1011
+        versionName "1.11"
     }
     buildTypes {
         release {
