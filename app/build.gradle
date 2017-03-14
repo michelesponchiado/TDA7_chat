@@ -10,8 +10,9 @@ android {
         targetSdkVersion 17
         // 1.10 entirely rebuilt the git repository and the project!!!
         // 1.11 some changes to handle "tf" command were lost  when switching git repo
-        versionCode 1011
-        versionName "1.11"
+        // 2.01 just recompiled changing the version name to 2.01 and the version code to 201
+        versionCode 201
+        versionName "2.01"
     }
     buildTypes {
         release {
